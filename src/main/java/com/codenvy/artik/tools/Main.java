@@ -1,47 +1,70 @@
 package com.codenvy.artik.tools;
 import java.io.IOException;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Iterator;
+import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.ParseException;
+
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+
 
 public class Main {
-    public static void main(String[] argvs) {
-        String ipAddress = "192.168.1.6"; // Add your own
-        final int timeout = 2000;
-        int port = 22; // You'll need some sort of service to connect to
-        InetSocketAddress byAddress1 = new InetSocketAddress(ipAddress, port); 
-        Socket socket = new Socket();
-        String messageFail = null ;
-        try {
-          socket.connect(byAddress1, timeout);
-        }
-        catch (IOException ex) {
-            if ( ex.getMessage().equals("Connection refused")) {
-                messageFail = port + " on " + ipAddress + " is closed.";
-            };
-            if ( ex instanceof UnknownHostException ) {
-                messageFail = ipAddress + " is unresolved.";
+    public static void main(String[] args) {
+        boolean showNetworkInformation=false;
+        System.out.println("Make sure artik board is on and connected to network then press <ENTER>:");
+        Scanner reader = new Scanner(System.in);  // Reading from System.in
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        //try{br.readLine();}catch(IOException ex){}
+        
+        ParseArgs parser = new ParseArgs();
+        parser.parse(args);
+        if(parser.search){
+            SearchForArtik sa = new SearchForArtik();
+            if(showNetworkInformation){//not used right now
+                sa.networkInformation();
             }
-            if ( ex instanceof SocketTimeoutException ) {
-                messageFail = "Timeout " + ipAddress + " on port " + port;
-            }
-        }finally {
-            if (socket != null) {
-                if ( socket.isConnected()) {
-                    System.out.println(port + " on " + ipAddress + " reachable");
-                } else {
-                    System.out.println(port + " on " + ipAddress + " not reachable; reason: " + messageFail );
-                }
-                try {
-                    socket.close();
-                } catch (IOException e) {
-                }
+            HashSet<String> foundIPs1 = new HashSet<String>(sa.search(parser.ip));
+            System.out.println("Found ("+foundIPs1.size()+") hosts using .");
+            System.out.println("Disconnect artik board cat5 cable then press <ENTER>:");
+            //try{br.readLine();}catch(IOException ex){}
+            HashSet<String> foundIPs2 = new HashSet<String>(sa.search(parser.ip));
+            System.out.println("Found ("+foundIPs2.size()+") hosts using .");
+            
+            if(foundIPs1.removeAll(foundIPs2)){
+                System.out.println("Possible ip addresses for artik board.");
+                // create an iterator
+                Iterator<String> iterator = foundIPs1.iterator(); 
+                // check values
+                while (iterator.hasNext()){
+                    System.out.println("Value: "+iterator.next() + " ");  
+                } 
             }
         }
-
+        
 
         String a = "Che12";
         System.out.println("Hello World " + a + "!");
     }
+    
 }
