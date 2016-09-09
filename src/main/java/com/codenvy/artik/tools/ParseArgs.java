@@ -53,9 +53,8 @@ public class ParseArgs {
             return;
         }
 
-        boolean search = cmd.hasOption("search");
+        search = cmd.hasOption("search");
         ip = cmd.getOptionValue("ipaddress");
-        
         if(!search){//This will change when more options are added.
             search=true;
             //System.exit(1);

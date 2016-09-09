@@ -28,32 +28,41 @@ public class SearchForArtik {
     List<String> foundIPs = new ArrayList();
     
     public List<String> search(String ip){
-        return search(ip,200);
+        return search(ip,20);
     }
     
     public List<String> search(String ip,int timeout){
-        List<String> ipSearch = Arrays.asList(ip.split("\\."));
-        if(ipSearch.size()>4){
-            System.exit(1);
-            return null;
+        if(ip!=null){
+            List<String> ipSearch = Arrays.asList(ip.split("\\."));
+            if(ipSearch.size()>4){
+                System.exit(1);
+                return null;
+            }
+            if(ipSearch.size()==4){
+                ipSearch.remove(4);
+            }
+            ip="";
+            for (String string : ipSearch) {
+                ip+=string+".";
+            }
+            findIPs(ip,timeout);
         }
-        if(ipSearch.size()==4){
-            ipSearch.remove(4);
+        else{
+             //findIPs("192.168.0.",timeout);
+             findIPs("192.168.1.",timeout);
+             //findIPs("192.168.2.",timeout);
         }
-        ip="";
-        for (String string : ipSearch) {
-            ip+=string+".";
-        }
-        
+        return foundIPs;
+    }
+    
+    private void findIPs(String ip,int timeout){
         for(int i=1;i<255;i++){
             if(tryConnection(ip+i,timeout)){
                 foundIPs.add(ip);
             }
         }
-        
-        return foundIPs;
-    }
-    
+
+    } 
     
 
     private boolean tryConnection(String ipAddress, int timeout){        
@@ -81,7 +90,7 @@ public class SearchForArtik {
                     System.out.println(port + " on " + ipAddress + " reachable");
                     reachable = true;
                 } else {
-                    System.out.println(port + " on " + ipAddress + " not reachable; reason: " + messageFail );
+                    //System.out.println(port + " on " + ipAddress + " not reachable; reason: " + messageFail );
                 }
                 try {
                     socket.close();

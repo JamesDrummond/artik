@@ -35,7 +35,7 @@ public class Main {
         System.out.println("Make sure artik board is on and connected to network then press <ENTER>:");
         Scanner reader = new Scanner(System.in);  // Reading from System.in
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        //try{br.readLine();}catch(IOException ex){}
+        try{br.readLine();}catch(IOException ex){}
         
         ParseArgs parser = new ParseArgs();
         parser.parse(args);
@@ -47,7 +47,7 @@ public class Main {
             HashSet<String> foundIPs1 = new HashSet<String>(sa.search(parser.ip));
             System.out.println("Found ("+foundIPs1.size()+") hosts using .");
             System.out.println("Disconnect artik board cat5 cable then press <ENTER>:");
-            //try{br.readLine();}catch(IOException ex){}
+            try{br.readLine();}catch(IOException ex){}
             HashSet<String> foundIPs2 = new HashSet<String>(sa.search(parser.ip));
             System.out.println("Found ("+foundIPs2.size()+") hosts using .");
             
