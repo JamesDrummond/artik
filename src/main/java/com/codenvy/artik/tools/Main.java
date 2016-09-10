@@ -51,20 +51,18 @@ public class Main {
             HashSet<String> foundIPs2 = new HashSet<String>(sa.search(parser.ip));
             System.out.println("Found ("+foundIPs2.size()+") hosts using .");
             
-            if(foundIPs1.removeAll(foundIPs2)){
+            foundIPs1.removeAll(foundIPs2);
+            if(foundIPs1.size()>0){
                 System.out.println("Possible ip addresses for artik board.");
                 // create an iterator
                 Iterator<String> iterator = foundIPs1.iterator(); 
                 // check values
                 while (iterator.hasNext()){
-                    System.out.println("Value: "+iterator.next() + " ");  
+                    System.out.println(iterator.next());  
                 } 
             }
         }
         
-
-        String a = "Che12";
-        System.out.println("Hello World " + a + "!");
     }
     
 }

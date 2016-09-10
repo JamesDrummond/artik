@@ -26,8 +26,8 @@ RUN echo "http://dl-4.alpinelinux.org/alpine/edge/community" >> /etc/apk/reposit
     apk add --update ca-certificates curl openssl openjdk8 sudo bash && \
     curl -sSL "https://${DOCKER_BUCKET}/builds/Linux/x86_64/docker-${DOCKER_VERSION}" -o /usr/bin/docker && \
     chmod +x /usr/bin/docker && \
-    addgroup -S user -g 1000 && \
-    adduser -S user -h /home/user -s /bin/bash -G root -u 1000 -D && \
+    addgroup -S -g 1000 user && \
+    adduser -S user -h /home/user -s /bin/bash -G user -u 1000 -D && \
     addgroup -S docker -g 101 && \
     adduser user docker && \
     adduser user user && \
@@ -38,6 +38,11 @@ RUN echo "http://dl-4.alpinelinux.org/alpine/edge/community" >> /etc/apk/reposit
     rm -rf /tmp/* /var/cache/apk/*
 
 EXPOSE 8000 8080
+
+RUN mkdir /home/user/artik-tools
+ADD target /home/user/artik-tools/
+ADD src /home/user/artik-tools/src
+RUN chown -R user:user /home/user/
 
 USER user
 
