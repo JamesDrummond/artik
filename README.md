@@ -8,7 +8,10 @@ The repo is to provide helpful software/scripts for the artik board. In general 
 
 To use build the dockerfile.
 
+```shell
 cd /projects/artik-tools/
 mvn clean install
+#run from host or workspace with docker support.
 docker build -t jdrummond/artik-tools .
 docker run jdrummond/artik-tools
+```
