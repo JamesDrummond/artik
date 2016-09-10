@@ -41,8 +41,13 @@ EXPOSE 8000 8080
 
 RUN mkdir /home/user/artik-tools
 ADD target /home/user/artik-tools/
+RUN mv /home/user/artik-tools/artik-ide-tools*.jar /home/user/artik-tools/artik-ide-tools.jar
 ADD src /home/user/artik-tools/src
 RUN chown -R user:user /home/user/
 
 USER user
+
+WORKDIR /home/user/artik-tools/
+
+ENTRYPOINT ["java","-jar","artik-ide-tools.jar"]
 
