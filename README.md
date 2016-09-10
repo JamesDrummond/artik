@@ -1,6 +1,6 @@
 # ARTIK IDE DEVELOPMENT
 
-![Contribute](http://beta.codenvy.com/factory/resources/codenvy-contribute.svg)](https://beta.codenvy.com/dashboard/#/load-factory?id=95txzq1w5v5hy9or)
+[![Contribute](http://beta.codenvy.com/factory/resources/codenvy-contribute.svg)](https://beta.codenvy.com/dashboard/#/load-factory?id=95txzq1w5v5hy9or)
 
 [![Eclipse License](http://img.shields.io/badge/license-Eclipse-brightgreen.svg)](https://github.com/codenvy/che/blob/master/LICENSE)
 
