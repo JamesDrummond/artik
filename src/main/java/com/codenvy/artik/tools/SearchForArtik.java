@@ -32,6 +32,7 @@ public class SearchForArtik {
     }
     
     public List<String> search(String ip,int timeout){
+        foundIPs = new ArrayList();
         if(ip!=null){
             List<String> ipSearch = Arrays.asList(ip.split("\\."));
             if(ipSearch.size()>4){
@@ -58,7 +59,7 @@ public class SearchForArtik {
     private void findIPs(String ip,int timeout){
         for(int i=1;i<255;i++){
             if(tryConnection(ip+i,timeout)){
-                foundIPs.add(ip);
+                foundIPs.add(ip+i);
             }
         }
 
