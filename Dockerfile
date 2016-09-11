@@ -23,7 +23,7 @@ ENV LANG=C.UTF-8 \
 
 RUN echo "http://dl-4.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
     apk upgrade --update && \
-    apk add --update ca-certificates curl openssl openjdk8 sudo bash && \
+    apk add --update net-tools ca-certificates curl openssl openjdk8-jre sudo bash openssh sshpass && \
     curl -sSL "https://${DOCKER_BUCKET}/builds/Linux/x86_64/docker-${DOCKER_VERSION}" -o /usr/bin/docker && \
     chmod +x /usr/bin/docker && \
     addgroup -S -g 1000 user && \

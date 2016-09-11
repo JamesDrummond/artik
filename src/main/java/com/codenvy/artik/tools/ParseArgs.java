@@ -22,8 +22,7 @@ import org.apache.commons.cli.ParseException;
 public class ParseArgs {
     public String ip;
     public int timeout;
-    boolean search;
-    boolean quick;
+    boolean search,quick,ssh;
     
     public ParseArgs(){}
     
@@ -55,9 +54,9 @@ public class ParseArgs {
         opQuick.setRequired(false);
         options.addOption(opQuick);
         
-        //Option opSearch = new Option("s", "search", false, "Search for Artik on local network. Will search 192.168.0-2 if '--ipaddress' is not set.");
-        //opSearch.setRequired(false);
-        //options.addOption(opSearch);
+        Option opSSH = new Option("s", "ssh", false, "SSH into ipaddress found.");
+        opSSH.setRequired(false);
+        options.addOption(opSSH);
 
         CommandLineParser parser = new GnuParser();
         CommandLine cmd;
@@ -95,5 +94,6 @@ public class ParseArgs {
             //return;
         }
         quick = cmd.hasOption("quick");
+        ssh = cmd.hasOption("ssh");
     }
 }

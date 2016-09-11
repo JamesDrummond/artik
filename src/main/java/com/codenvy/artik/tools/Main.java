@@ -28,6 +28,8 @@ public class Main {
         HashSet<String> foundIPs1 = new HashSet<String>();
         HashSet<String> foundIPs2 = new HashSet<String>();
         Iterator<String> iterator; 
+        OpenSSH ssh = new OpenSSH();
+        //ssh.connect("192.168.1.6");//testing
         
         parser.parse(args);
         if(parser.search){
@@ -78,6 +80,15 @@ public class Main {
             }
             else{
                 System.out.println("Could not find ipaddress of ARTIK board on local network.");
+            }
+            if(foundIPs1.size()==1 && parser.ssh){
+                ssh.connect(foundIPs1.iterator().next());
+            }
+            if(foundIPs1.size()>1 && parser.ssh && parser.quick){
+                System.out.println("More than (1) ssh server found on network. SSH failed. Try removing quick option and try again.");
+            }
+            if(foundIPs1.size()<1 && parser.ssh){
+                System.out.println("No ssh server found on network. SSH failed. Make sure ipaddress is set correctly, increase timeout and try again.");
             }
         }
         
